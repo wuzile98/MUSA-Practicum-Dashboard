@@ -1,50 +1,173 @@
 html {
-    font-family: "Open Sans", sans-serif;
-  }
-  
-  body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  h1 {
-    padding: 0.2rem;
-    padding-left: 1rem;
-  }
-  
-  #eviction-map {
-    height: 100%;
-  }
-  
-  .content-container {
-    display: flex;
-    flex-direction: row-reverse;
-    overflow: hidden;
-    height: 100%;
-  }
-  
-  .map-container {
-    width: 100%;
-  }
-  
-  .search-bar {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-    font-size: 16px;
-    padding: 5px;
-    width: 200px;
-    z-index: 999;
-  }
-  
+  font-family: "Open Sans", sans-serif;
+}
 
-  
-  
-  
-  
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+h1 {
+  padding: 0.2rem;
+  padding-left: 1rem;
+}
+
+h4 {
+  margin: 0.2rem 0;
+  padding: 0.2rem;
+  padding-left: 0.4rem;
+}
+
+#eviction-map {
+  height: 100%;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: row-reverse;
+  overflow: hidden;
+  height: 100%;
+}
+
+.map-container {
+  width: 100%;
+}
+
+.search-bar {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 5px;
+  width: 200px;
+  z-index: 999;
+}
+
+.checkbox-container{
+  border: 2px solid black;
+  z-index: 999;
+  position: absolute;
+  bottom: 50px;
+  left: 10px;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  width: 200px;
+  padding: 5px;
+
+}
+
+.infomation-container{
+  border: 2px solid black;
+  z-index: 999;
+  position: absolute;
+  top: 200px;
+  left: 10px;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  width: 200px;
+  padding: 5px;
+  height: 150px;
+}
+
+#property-select {
+  border: 2px solid black;
+  z-index: 999;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  width: 200px;
+  padding: 5px;
+}
+
+.instruction-container{
+  border: 2px solid black;
+  z-index: 999;
+  position: absolute;
+  top: 200px;
+  right: 10px;
+  bottom:10px;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  width: 200px;
+  padding: 5px;
+}
+
+.zoom-filter{
+  border: 2px solid black;
+  z-index: 998;
+  position: absolute;
+  left: 10px;
+  bottom:355px;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  width: 200px;
+  padding: 5px;
+}
+
+
+.month-filter{
+  border: 2px solid black;
+  z-index: 998;
+  position: absolute;
+  left: 10px;
+  bottom:185px;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  width: 200px;
+  padding: 5px;
+}
+
+.year-filter{
+  border: 2px solid black;
+  z-index: 998;
+  position: absolute;
+  left: 10px;
+  bottom: 270px;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  width: 200px;
+  padding: 5px;
+}
+
+.eviction-slider{
+  border: 2px solid black;
+  z-index: 998;
+  position: absolute;
+  left: 10px;
+  bottom: 440px;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  width: 200px;
+  padding: 5px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+

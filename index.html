@@ -11,9 +11,85 @@
             <h1>Eviction Watch</h1>
         </div>
         <div class="content-container">
-            
+
             <!-- Search bar -->
             <input type="text" class="search-bar" placeholder="Search...">
+            
+            <!-- Words Conatiner -->
+            <div class="infomation-container">
+              <h4>Informations</h4>
+            </div>
+            <div class="instruction-container">
+              <h4>User Guide</h4>
+            </div>
+
+            <div class="eviction-slider">
+              <h4>Eviction Count Slider</h4>
+              <input type="range" min="0" max="100" value="50" class="slider">
+            </div>
+
+            <!-- drop-down check box -->
+            <div class="zoom-filter">
+              <h4>Zoom Level Filter</h4>
+              <select id="property-select">
+                <option value="neighborhood">neighborhood</option>
+                <option value="census_tract">census_tract</option>
+                <option value="property">property</option>
+              </select>
+            </div>
+
+
+
+            <!-- drop-down check box -->
+            <div class="month-filter">
+              <h4>Month Filter</h4>
+              <select id="property-select">
+                <option value="year">All Months</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">Stepember</option>
+                <option value="10">October</option>
+                <option value="11">Novermber</option>
+                <option value="12">December</option>
+              </select>
+            </div>
+            
+
+            <!-- check boxes -->
+            <div class="year-filter">
+              <h4>Year Filter</h4>
+              <select id="property-select">
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+              </select>
+            </div>
+
+            <div class="checkbox-container">
+                <table>
+                    <h4>Test Block</h4>
+                    <tr>
+                      <td><input type="checkbox" id="checkbox1" name="checkbox1" value="shape_area"><label for="checkbox1">Area</label></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" id="checkbox2" name="checkbox2" value="checkbox2"><label for="checkbox2">2017</label></td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" id="checkbox3" name="checkbox3" value="checkbox3"><label for="checkbox3">2018</label></td>
+                    </tr>
+                  </table>
+                </div>
 
             <!-- Map container -->
             <div class="map-container">
@@ -21,7 +97,7 @@
             </div>
         </div>
     </body>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="crossorigin=""></script>
     <script src="https://unpkg.com/leaflet.vectorgrid/dist/Leaflet.VectorGrid.bundled.js"></script>
     <script src="./js/main.js" type="module"></script>
