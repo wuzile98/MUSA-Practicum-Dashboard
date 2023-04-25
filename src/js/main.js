@@ -3,7 +3,6 @@ import { mapInitialize, showPropertiesOnMap, showNeighborhoodsOnMap, clearMap, t
 //Initialize the evictionMap
 const evictionMap  = mapInitialize();
 showNeighborhoodsOnMap(evictionMap);
-showCensusBlocksOnMap(evictionMap);
 
 // show all properties on map based on the url
 evictionMap.on('zoomend', function() {
@@ -13,14 +12,27 @@ evictionMap.on('zoomend', function() {
 // showPointsOnMap(evictionMap);
 // showCensusBlocksOnMap(evictionMap);
 
-let checkboxes = document.querySelectorAll('input[type=checkbox]');
+const checkbox1 = document.querySelectorAll('#checkbox1');
+const checkbox2 = document.querySelectorAll('#checkbox2');
   
-  checkboxes.forEach(function(checkbox) {
+  checkbox1.forEach(function(checkbox) {
     checkbox.addEventListener('change', function() {
       let column = this.value;
       console.log(column);
       clearMap(evictionMap);
       showNeighborhoodsOnMap(evictionMap, column);
   })});
+
+  checkbox2.forEach(function(checkbox) {
+    checkbox.addEventListener('change', function() {
+      let column = this.value;
+      console.log(column);
+      clearMap(evictionMap);
+      showCensusBlocksOnMap(evictionMap, column);
+  })});
+
+
+
+
 
 window.evictionMap = evictionMap;

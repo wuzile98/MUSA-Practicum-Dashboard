@@ -21,14 +21,6 @@ function showPropertiesOnMap (map) {
     map.propertiesLayer = tileLayer;
   }
 
-function showCensusBlocksOnMap (map) {
-  fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/census_tract.geojson')
-  .then(response => response.json())
-  .then(data => {
-    let census_tract = L.geoJSON(data).addTo(map);
-  });
-}
-
 function clearMap(map) {
 map.eachLayer(function(layer) {
   if (layer instanceof L.GeoJSON) {
@@ -37,41 +29,91 @@ map.eachLayer(function(layer) {
 });
 }
 
-function getColor (column) {
-console.log(column);
-let color = "";
-if (column < 10000000){
-  color = "red";
-} else {
-  color = "blue";
-}
-return color;
-}
-
-function styleMap(feature, columns) {
-let color = 'black';
-console.log(columns);
-// let maxNumber = Math.max(...columns);
-// console.log(maxNumber);
-if (feature.properties.hasOwnProperty(columns)) {
-  color = getColor(feature.properties[columns]);
-}
-return {
-  color: 'black',
-  weight: 2,
-  fillColor: color,
-  fillOpacity: 0.5
-};
+function getColorCensus (column) {
+  let color = "";
+  if (column < 100){
+    color = "#f5f2ec";
+  } else if (column >= 100 && column < 500 ) {
+    color = "#e4dbc4"
+  } else if (column >= 500 && column < 1000) {
+    color = "#d19b75"
+  } else if (column >= 1000 && column < 2000) {
+    color = "#a57569"
+  } else if (column >= 2000 && column < 3000) {
+    color = "#524d60"
+  } else {
+    color = "#2e2345"
+  }
+  return color;
 }
 
+function styleMapCensus(feature, columns) {
+  let color = 'black';
+  // let maxNumber = Math.max(...columns);
+  // console.log(maxNumber);
+  if (feature.properties.hasOwnProperty(columns)) {
+    color = getColorCensus(feature.properties[columns]);
+  }
+  return {
+    color: 'black',
+    weight: 2,
+    fillColor: color,
+    fillOpacity: 0.5
+  };
+}
 
-function showNeighborhoodsOnMap(map, column) {
-fetch('https://raw.githubusercontent.com/azavea/geo-data/master/Neighborhoods_Philadelphia/Neighborhoods_Philadelphia.geojson')
+function showCensusBlocksOnMap (map, column) {
+  fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/census_with_counts_01.geojson')
   .then(response => response.json())
   .then(data => {
     let neighborhoods = L.geoJSON(data, {
       style: function(feature) {
-        return styleMap(feature, column);
+        return styleMapCensus(feature, column);
+      }
+    }).addTo(map);
+  });
+}
+
+function getColorNeighborhood (column) {
+  let color = "";
+  if (column < 100){
+    color = "#f5f2ec";
+  } else if (column >= 100 && column < 500 ) {
+    color = "#e4dbc4"
+  } else if (column >= 500 && column < 1000) {
+    color = "#d19b75"
+  } else if (column >= 1000 && column < 2000) {
+    color = "#a57569"
+  } else if (column >= 2000 && column < 3000) {
+    color = "#524d60"
+  } else {
+    color = "#2e2345"
+  }
+  return color;
+}
+
+function styleMapNeighborhood(feature, columns) {
+  let color = 'black';
+  // let maxNumber = Math.max(...columns);
+  // console.log(maxNumber);
+  if (feature.properties.hasOwnProperty(columns)) {
+    color = getColorNeighborhood(feature.properties[columns]);
+  }
+  return {
+    color: 'black',
+    weight: 2,
+    fillColor: color,
+    fillOpacity: 0.5
+  };
+}
+
+function showNeighborhoodsOnMap(map, column) {
+fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/neighborhood_with_counts.geojson')
+  .then(response => response.json())
+  .then(data => {
+    let neighborhoods = L.geoJSON(data, {
+      style: function(feature) {
+        return styleMapNeighborhood(feature, column);
       }
     }).addTo(map);
     
@@ -79,23 +121,23 @@ fetch('https://raw.githubusercontent.com/azavea/geo-data/master/Neighborhoods_Ph
 }
 
 function toggleMapFeatures(map) {
-let zoomLevel = map.getZoom();
-map.eachLayer(function (layer) {
-  // check if layer is a tile layer (i.e. base map layer)
-  if (layer instanceof L.TileLayer) {
-    return;
-  }
-  map.removeLayer(layer);
-});
+  let zoomLevel = map.getZoom();
+  map.eachLayer(function (layer) {
+    // check if layer is a tile layer (i.e. base map layer)
+    if (layer instanceof L.TileLayer) {
+      return;
+    }
+    map.removeLayer(layer);
+  });
 
-if (zoomLevel < 15) {
-  // show neighborhoods
-  showNeighborhoodsOnMap(map);
-} else {
-  // show property points
-  //showCensusBlocksOnMap(map);
-  showPropertiesOnMap(map);
-}
+  if (zoomLevel < 15) {
+    // show neighborhoods
+    showNeighborhoodsOnMap(map);
+  } else if (zoomLevel >= 15 && zoomLevel <= 18) {
+    showCensusBlocksOnMap(map);
+  } else if (zoomLevel > 18) {
+    showPropertiesOnMap(map)
+  }
 }
 
 export{

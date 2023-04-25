@@ -12,7 +12,7 @@ gcloud storage cp \
 # at https://gdal.org/drivers/vector/mvt.html for more information.
 ogr2ogr \
   -f MVT \
-  -dsco MINZOOM=15 \
+  -dsco MINZOOM=14 \
   -dsco MAXZOOM=19 \
   -dsco COMPRESS=NO \
   ./properties \
