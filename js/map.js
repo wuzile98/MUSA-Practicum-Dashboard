@@ -35,13 +35,27 @@ function showPropertiesOnMap(map) {
   let tileLayer = L.vectorGrid.protobuf(
     "https://storage.googleapis.com/wzl_data_lake/tiles/properties/{z}/{x}/{y}.pbf",
     {
-      vectorTileLayerName: "property_tile_info",
       rendererFactory: L.canvas.tile,
-      interactive: true,
-      getFeatureId: function (feature) {
-        return feature.properties.id;
+      vectorTileLayerStyles: {
+        parcel_with_counts_trim: function(properties, zoom) {
+          var count = properties.eviction_count_total;
+          var fillColor = 'red';
+          if (count == 0) {fillColor = "#2e2345";}
+          else if (count >0 && count <= 10) {fillColor = 'orange';}
+          else if (count > 10 && count <= 50) {fillColor = 'orange';}
+          else if (count > 50 && count <= 150) {fillColor = 'red';}
+          else if (count > 150 && count <= 500) {fillColor = 'red';}
+          else {fillColor = 'red';}
+          return {
+              weight: 2,
+              fillColor: 'red',
+              color: fillColor,
+              opacity: 1,
+              fillOpacity: 1
+        };
       },
-    }
+    },
+  }
   ).addTo(map);
 
   // Store the layer in the map object
@@ -130,19 +144,30 @@ function getColorCensus (column) {
   return color;
 }
 
-function styleMapCensus(feature, columns) {
-  let color = 'black';
-  // let maxNumber = Math.max(...columns);
-  // console.log(maxNumber);
-  if (feature.properties.hasOwnProperty(columns)) {
-    color = getColorCensus(feature.properties[columns]);
-  }
+// function styleMapCensus(feature, columns) {
+//   let color = 'black';
+//   // let maxNumber = Math.max(...columns);
+//   // console.log(maxNumber);
+//   if (feature.properties.hasOwnProperty(columns)) {
+//     color = getColorCensus(feature.properties[columns]);
+//   }
+//   return {
+//     color: 'black',
+//     weight: 2,
+//     fillColor: color,
+//     fillOpacity: 0.8
+//   };
+// }
+
+function styleMapCensus(feature){
   return {
-    color: 'black',
+    fillColor: getColorCensus(feature.properties.eviction_count_total),
     weight: 2,
-    fillColor: color,
-    fillOpacity: 0.8
-  };
+    color: 'black',
+    opacity: 1,
+    dashArray: '3',
+    fillOpacity: 0.7
+  }
 }
 
 function showCensusBlocksOnMap (map, column) {
@@ -188,20 +213,31 @@ function getColorNeighborhood (column) {
   return color;
 }
 
-function styleMapNeighborhood(feature, columns) {
-  let color = 'black';
-  // let maxNumber = Math.max(...columns);
-  // console.log(maxNumber);
-  if (feature.properties.hasOwnProperty(columns)) {
-    color = getColorNeighborhood(feature.properties[columns]);
-  }
+function styleMapNeighborhood(feature){
   return {
-    color: 'black',
+    fillColor: getColorNeighborhood(feature.properties.eviction_count_total),
     weight: 2,
-    fillColor: color,
-    fillOpacity: 0.8
-  };
+    color: 'black',
+    opacity: 1,
+    dashArray: '3',
+    fillOpacity: 0.7
+  }
 }
+
+// function styleMapNeighborhood(feature, columns) {
+//   let color = 'black';
+//   // let maxNumber = Math.max(...columns);
+//   // console.log(maxNumber);
+//   if (feature.properties.hasOwnProperty(columns)) {
+//     color = getColorNeighborhood(feature.properties[columns]);
+//   }
+//   return {
+//     color: 'black',
+//     weight: 2,
+//     fillColor: color,
+//     fillOpacity: 0.8
+//   };
+// }
 
 function showNeighborhoodsOnMap(map, column) {
 fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/neighborhood_with_counts.geojson')
@@ -209,7 +245,7 @@ fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/neighborh
   .then(data => {
     let neighborhoods = L.geoJSON(data, {
       style: function(feature) {
-        return styleMapNeighborhood(feature, column);
+        return styleMapNeighborhood(feature);
       },
       onEachFeature: function(feature, layer) {
         // Create an array of strings representing the keys and values for each property in the feature's properties object

@@ -4,7 +4,6 @@ import { handleSearchButtonClick } from "./search.js";
 //Initialize the evictionMap
 const evictionMap  = mapInitialize();
 showNeighborhoodsOnMap(evictionMap);
-showPropertiesOnMap(evictionMap);
 
 // show all properties on map based on the url
 evictionMap.on('zoomend', function() {
