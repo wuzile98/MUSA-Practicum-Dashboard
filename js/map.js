@@ -40,18 +40,19 @@ function showPropertiesOnMap(map) {
         parcel_with_counts_trim: function(properties, zoom) {
           var count = properties.eviction_count_total;
           var fillColor = 'red';
-          if (count == 0) {fillColor = "#d19b75";}
-          else if (count >0 && count <= 10) {fillColor = '#2e2345';}
-          else if (count > 10 && count <= 50) {fillColor = '#2e2345';}
-          else if (count > 50 && count <= 150) {fillColor = 'red';}
-          else if (count > 150 && count <= 500) {fillColor = 'red';}
+          if (count == 0) {fillColor = "#f5f2ec";}
+          else if (count >0 && count <= 10) {fillColor = '#e4dbc4';}
+          else if (count > 10 && count <= 50) {fillColor = '#d19b75';}
+          else if (count > 50 && count <= 150) {fillColor = '#a57569';}
+          else if (count > 150 && count <= 500) {fillColor = '#524d60';}
           else {fillColor = '#2e2345';}
           return {
               weight: 2,
-              fillColor: 'red',
-              color: fillColor,
-              opacity: 1,
-              fillOpacity: 1
+              fillColor: fillColor,
+              color: 'black',
+              fill: true,
+              opacity: 0.8,
+              fillOpacity: 0.8
         };
       },
     },
@@ -175,7 +176,7 @@ function showCensusBlocksOnMap (map, column) {
   fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/census_with_counts_01.geojson')
   .then(response => response.json())
   .then(data => {
-    let neighborhoods = L.geoJSON(data, {
+    let census_tract = L.geoJSON(data, {
       style: function(feature) {
         return styleMapCensus(feature, column);
       },

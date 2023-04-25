@@ -10,6 +10,21 @@ evictionMap.on('zoomend', function() {
   toggleMapFeatures(evictionMap);
 });
 
+const info  = L.control();
+
+info.onAdd = function (map) {
+  this._div = L.DomUtil.create('div', 'info');
+  this.update();
+  return this._div;
+};
+
+info.update = function (props) {
+  const contents = props ? `<b>${props.name}</b><br />${props.density} people / mi<sup>2</sup>` : 'Hover over a state';
+  this._div.innerHTML = `<h4>US Population Density</h4>${contents}`;
+};
+
+info.addTo(evictionMap);
+
 // showPointsOnMap(evictionMap);
 // showCensusBlocksOnMap(evictionMap);
 
@@ -33,3 +48,4 @@ const checkbox2 = document.querySelectorAll('#checkbox2');
   })});
 
 window.evictionMap = evictionMap;
+window.info = info;
