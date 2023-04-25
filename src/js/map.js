@@ -11,15 +11,23 @@ function mapInitialize(){
   }
 
 function showPropertiesOnMap (map) {
-  let tileLayer = L.vectorGrid.protobuf('https://storage.googleapis.com/musa509s23_team01_public/tiles/properties/{z}/{x}/{y}.pbf', {
+  let tileLayer = L.vectorGrid.protobuf('https://storage.googleapis.com/wzl_data_lake/tiles/properties/{z}/{x}/{y}.pbf', {
       vectorTileLayerName: 'property_tile_info', // specify the name of the layer with property information
       rendererFactory: L.canvas.tile, // use the canvas-based renderer for better performance
       interactive: true, // enable mouse events on the layer
       getFeatureId: function(feature) { return feature.properties.id; } // use the "id" property as the feature ID for mouse events
     }).addTo(map);
     console.log(tileLayer);
+    map.propertiesLayer = tileLayer;
   }
 
+function showCensusBlocksOnMap (map) {
+  fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/census_tract.geojson')
+  .then(response => response.json())
+  .then(data => {
+    let census_tract = L.geoJSON(data).addTo(map);
+  });
+}
 
 function clearMap(map) {
 map.eachLayer(function(layer) {
@@ -85,6 +93,7 @@ if (zoomLevel < 15) {
   showNeighborhoodsOnMap(map);
 } else {
   // show property points
+  //showCensusBlocksOnMap(map);
   showPropertiesOnMap(map);
 }
 }
@@ -95,4 +104,5 @@ export{
   showNeighborhoodsOnMap,
   clearMap,
   toggleMapFeatures,
+  showCensusBlocksOnMap,
 };

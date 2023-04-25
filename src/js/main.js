@@ -1,8 +1,9 @@
-import { mapInitialize, showPropertiesOnMap, showNeighborhoodsOnMap, clearMap, toggleMapFeatures} from "./map.js";
+import { mapInitialize, showPropertiesOnMap, showNeighborhoodsOnMap, clearMap, toggleMapFeatures, showCensusBlocksOnMap} from "./map.js";
 
 //Initialize the evictionMap
 const evictionMap  = mapInitialize();
 showNeighborhoodsOnMap(evictionMap);
+showCensusBlocksOnMap(evictionMap);
 
 // show all properties on map based on the url
 evictionMap.on('zoomend', function() {
