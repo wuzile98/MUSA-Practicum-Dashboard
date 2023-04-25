@@ -40,12 +40,12 @@ function showPropertiesOnMap(map) {
         parcel_with_counts_trim: function(properties, zoom) {
           var count = properties.eviction_count_total;
           var fillColor = 'red';
-          if (count == 0) {fillColor = "#2e2345";}
-          else if (count >0 && count <= 10) {fillColor = 'orange';}
-          else if (count > 10 && count <= 50) {fillColor = 'orange';}
+          if (count == 0) {fillColor = "#d19b75";}
+          else if (count >0 && count <= 10) {fillColor = '#2e2345';}
+          else if (count > 10 && count <= 50) {fillColor = '#2e2345';}
           else if (count > 50 && count <= 150) {fillColor = 'red';}
           else if (count > 150 && count <= 500) {fillColor = 'red';}
-          else {fillColor = 'red';}
+          else {fillColor = '#2e2345';}
           return {
               weight: 2,
               fillColor: 'red',
