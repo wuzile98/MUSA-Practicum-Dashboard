@@ -1,8 +1,10 @@
 import { mapInitialize, showPropertiesOnMap, showNeighborhoodsOnMap, clearMap, toggleMapFeatures, showCensusBlocksOnMap} from "./map.js";
+import { handleSearchButtonClick } from "./search.js";
 
 //Initialize the evictionMap
 const evictionMap  = mapInitialize();
 showNeighborhoodsOnMap(evictionMap);
+showPropertiesOnMap(evictionMap);
 
 // show all properties on map based on the url
 evictionMap.on('zoomend', function() {
@@ -30,9 +32,5 @@ const checkbox2 = document.querySelectorAll('#checkbox2');
       clearMap(evictionMap);
       showCensusBlocksOnMap(evictionMap, column);
   })});
-
-
-
-
 
 window.evictionMap = evictionMap;

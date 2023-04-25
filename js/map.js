@@ -2,24 +2,107 @@ function mapInitialize(){
   //initialize the map variable as evictionMap and retrun the variable
   
   let map = L.map('eviction-map').setView([39.952436849966794, -75.16356820883757], 13);
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+      const mapboxAccount = 'mapbox';
+      const mapboxStyle = 'light-v10';
+      const mapboxToken = 'pk.eyJ1IjoieWVzZW5pYW8iLCJhIjoiY2tlZjAyM3p5MDNnMjJycW85bmpjenFkOCJ9.TDYe7XRNP8CnAto0kLA5zA';
+
+      L.tileLayer(`https://api.mapbox.com/styles/v1/${mapboxAccount}/${mapboxStyle}/tiles/256/{z}/{x}/{y}@2x?access_token=${mapboxToken}`, {
       maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
       }).addTo(map);
 
   return map;
   }
 
-function showPropertiesOnMap (map) {
-  let tileLayer = L.vectorGrid.protobuf('https://storage.googleapis.com/wzl_data_lake/tiles/properties/{z}/{x}/{y}.pbf', {
-      vectorTileLayerName: 'property_tile_info', // specify the name of the layer with property information
-      rendererFactory: L.canvas.tile, // use the canvas-based renderer for better performance
-      interactive: true, // enable mouse events on the layer
-      getFeatureId: function(feature) { return feature.properties.id; } // use the "id" property as the feature ID for mouse events
-    }).addTo(map);
-    console.log(tileLayer);
-    map.propertiesLayer = tileLayer;
+
+// function showPropertiesOnMap(map) {
+//   // Load the vector tile layer
+//   let tileLayer = L.vectorGrid.protobuf('https://storage.googleapis.com/wzl_data_lake/tiles/properties/{z}/{x}/{y}.pbf', {
+//     vectorTileLayerName: 'property_tile_info',
+//     rendererFactory: L.canvas.tile,
+//     interactive: true,
+//     getFeatureId: function(feature) { return feature.properties.id; }
+//   }).addTo(map);
+
+//   // Store the layer in the map object
+//   map.propertiesLayer = tileLayer;
+// }
+
+
+function showPropertiesOnMap(map) {
+  // Load the vector tile layer
+  let tileLayer = L.vectorGrid.protobuf(
+    "https://storage.googleapis.com/wzl_data_lake/tiles/properties/{z}/{x}/{y}.pbf",
+    {
+      vectorTileLayerName: "property_tile_info",
+      rendererFactory: L.canvas.tile,
+      interactive: true,
+      getFeatureId: function (feature) {
+        return feature.properties.id;
+      },
+    }
+  ).addTo(map);
+
+  // Store the layer in the map object
+  map.propertiesLayer = tileLayer;
+
+  // Search for a property by its address
+  function searchPropertyByAddress(address) {
+    let foundProperty = null;
+    let layers = tileLayer.getLayers();
+    layers.forEach(function(layer) {
+      let layerAddress = layer.feature.properties.ADDRESS;
+      if (layerAddress && layerAddress.toUpperCase() === address.toUpperCase()) {
+        foundProperty = layer.feature;
+        return;
+      }
+    });
+    return foundProperty;
   }
+
+  // Show a popup with property information
+  function showPropertyInfoPopup(feature) {
+    let popupContent =
+      "<b>" +
+      feature.properties.ADDRESS +
+      "</b><br>" +
+      "Owner: " +
+      feature.properties.OWNER +
+      "<br>" +
+      "Assessed Value: $" +
+      feature.properties.AV_TOTAL.toLocaleString() +
+      "<br>";
+    L.popup()
+      .setLatLng([
+        feature.geometry.coordinates[1],
+        feature.geometry.coordinates[0],
+      ])
+      .setContent(popupContent)
+      .openOn(map);
+  }
+
+  // Add event listener to the search button
+  let searchButton = document.getElementById("search-button");
+  searchButton.addEventListener("click", function () {
+    let searchInput = document.getElementById("search-input");
+    let address = searchInput.value.trim();
+    let foundProperty = searchPropertyByAddress(address);
+    if (foundProperty) {
+      // Pan and zoom to the property location
+      let latlng = L.latLng(
+        foundProperty.geometry.coordinates[1],
+        foundProperty.geometry.coordinates[0]
+      );
+      map.setView(latlng, 18);
+      // Show a popup with property information
+      showPropertyInfoPopup(foundProperty);
+    } else {
+      alert("No property found with address " + address);
+    }
+  });
+}
+
 
 function clearMap(map) {
 map.eachLayer(function(layer) {
@@ -37,9 +120,9 @@ function getColorCensus (column) {
     color = "#e4dbc4"
   } else if (column >= 500 && column < 1000) {
     color = "#d19b75"
-  } else if (column >= 1000 && column < 2000) {
+  } else if (column >= 1000 && column < 1500) {
     color = "#a57569"
-  } else if (column >= 2000 && column < 3000) {
+  } else if (column >= 1500 && column < 2000) {
     color = "#524d60"
   } else {
     color = "#2e2345"
@@ -58,7 +141,7 @@ function styleMapCensus(feature, columns) {
     color: 'black',
     weight: 2,
     fillColor: color,
-    fillOpacity: 0.5
+    fillOpacity: 0.8
   };
 }
 
@@ -69,6 +152,19 @@ function showCensusBlocksOnMap (map, column) {
     let neighborhoods = L.geoJSON(data, {
       style: function(feature) {
         return styleMapCensus(feature, column);
+      },
+      onEachFeature: function(feature, layer) {
+        // Create an array of strings representing the keys and values for each property in the feature's properties object
+        var props = [
+          'GEOID: ' + feature.properties.GEOID,
+          'eviction_count_total: ' +feature.properties.eviction_count_total,
+        ];
+
+        // Create a popup content string that includes the array of properties
+        var popupContent = '<strong>Census_Tract:</strong><br>' + props.join('<br>');
+
+        // Bind the popup to the layer and bind it to the click event
+        layer.bindPopup(popupContent);
       }
     }).addTo(map);
   });
@@ -103,7 +199,7 @@ function styleMapNeighborhood(feature, columns) {
     color: 'black',
     weight: 2,
     fillColor: color,
-    fillOpacity: 0.5
+    fillOpacity: 0.8
   };
 }
 
@@ -114,6 +210,19 @@ fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/neighborh
     let neighborhoods = L.geoJSON(data, {
       style: function(feature) {
         return styleMapNeighborhood(feature, column);
+      },
+      onEachFeature: function(feature, layer) {
+        // Create an array of strings representing the keys and values for each property in the feature's properties object
+        var props = [
+          'name: ' + feature.properties.name,
+          'eviction_count_total: ' +feature.properties.eviction_count_total,
+        ];
+
+        // Create a popup content string that includes the array of properties
+        var popupContent = '<strong>Neighborhood:</strong><br>' + props.join('<br>');
+
+        // Bind the popup to the layer and bind it to the click event
+        layer.bindPopup(popupContent);
       }
     }).addTo(map);
     

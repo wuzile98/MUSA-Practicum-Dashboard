@@ -36,9 +36,9 @@ h4 {
   width: 100%;
 }
 
-.search-bar {
+.search-container {
   position: absolute;
-  bottom: 10px;
+  bottom: 515px;
   left: 10px;
   background-color: white;
   border: 2px solid black;
@@ -46,7 +46,28 @@ h4 {
   font-size: 16px;
   padding: 5px;
   width: 200px;
+  height: 85px;
   z-index: 999;
+}
+
+#search-input {
+  padding: 8px;
+  width: 120px;
+  border-radius: 4px 0 0 4px;
+  height: 10px;
+  border: 1px solid #ccc;
+  flex-grow: 1;
+}
+
+#search-button {
+  padding: 8px;
+  background-color: #2e2345;
+  width: 54px;
+  color: white;
+  border-radius: 0 4px 4px 0;
+  border: 1px solid #ccc;
+  font-size: 3px;
+  cursor: pointer;
 }
 
 .checkbox-container{
@@ -67,14 +88,14 @@ h4 {
   border: 2px solid black;
   z-index: 999;
   position: absolute;
-  top: 200px;
+  top: 175px;
   left: 10px;
   border-radius: 5px;
   background-color: white;
   font-size: 16px;
   width: 200px;
   padding: 5px;
-  height: 150px;
+  height: 90px;
 }
 
 #property-select {
