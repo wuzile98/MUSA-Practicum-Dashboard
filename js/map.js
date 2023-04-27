@@ -16,26 +16,14 @@ function mapInitialize(){
   }
 
 
-// function showPropertiesOnMap(map) {
-//   // Load the vector tile layer
-//   let tileLayer = L.vectorGrid.protobuf('https://storage.googleapis.com/wzl_data_lake/tiles/properties/{z}/{x}/{y}.pbf', {
-//     vectorTileLayerName: 'property_tile_info',
-//     rendererFactory: L.canvas.tile,
-//     interactive: true,
-//     getFeatureId: function(feature) { return feature.properties.id; }
-//   }).addTo(map);
-
-//   // Store the layer in the map object
-//   map.propertiesLayer = tileLayer;
-// }
-
-
 function showPropertiesOnMap(map) {
   // Load the vector tile layer
   let tileLayer = L.vectorGrid.protobuf(
-    "https://storage.googleapis.com/wzl_data_lake/tiles/properties/{z}/{x}/{y}.pbf",
+    "https://storage.googleapis.com/wzl_data_lake/tiles_01/{z}/{x}/{y}.pbf",
     {
       rendererFactory: L.canvas.tile,
+      interactive: true,
+
       vectorTileLayerStyles: {
         parcel_with_counts_trim: function(properties, zoom) {
           var count = properties.eviction_count_total;
@@ -52,80 +40,31 @@ function showPropertiesOnMap(map) {
               color: 'black',
               fill: true,
               opacity: 0.8,
-              fillOpacity: 0.8
-        };
+              fillOpacity: 0.8,
+              dashArray: '3'
+              
+          };
+        },
       },
-    },
-  }
+
+      getFeatureId: function(feature){
+        return feature.properties.parcel_number;
+      }
+
+    }
   ).addTo(map);
 
   // Store the layer in the map object
   map.propertiesLayer = tileLayer;
-
-
-  // Search for a property by its address
-  // function searchPropertyByAddress(address) {
-  //   let foundProperty = null;
-  //   let layers = tileLayer.getLayers();
-  //   layers.forEach(function(layer) {
-  //     let layerAddress = layer.feature.properties.ADDRESS;
-  //     if (layerAddress && layerAddress.toUpperCase() === address.toUpperCase()) {
-  //       foundProperty = layer.feature;
-  //       return;
-  //     }
-  //   });
-  //   return foundProperty;
-  // }
-
-  // // Show a popup with property information
-  // function showPropertyInfoPopup(feature) {
-  //   let popupContent =
-  //     "<b>" +
-  //     feature.properties.ADDRESS +
-  //     "</b><br>" +
-  //     "Owner: " +
-  //     feature.properties.OWNER +
-  //     "<br>" +
-  //     "Assessed Value: $" +
-  //     feature.properties.AV_TOTAL.toLocaleString() +
-  //     "<br>";
-  //   L.popup()
-  //     .setLatLng([
-  //       feature.geometry.coordinates[1],
-  //       feature.geometry.coordinates[0],
-  //     ])
-  //     .setContent(popupContent)
-  //     .openOn(map);
-  // }
-
-  // // Add event listener to the search button
-  // let searchButton = document.getElementById("search-button");
-  // searchButton.addEventListener("click", function () {
-  //   let searchInput = document.getElementById("search-input");
-  //   let address = searchInput.value.trim();
-  //   let foundProperty = searchPropertyByAddress(address);
-  //   if (foundProperty) {
-  //     // Pan and zoom to the property location
-  //     let latlng = L.latLng(
-  //       foundProperty.geometry.coordinates[1],
-  //       foundProperty.geometry.coordinates[0]
-  //     );
-  //     map.setView(latlng, 18);
-  //     // Show a popup with property information
-  //     showPropertyInfoPopup(foundProperty);
-  //   } else {
-  //     alert("No property found with address " + address);
-  //   }
-  // });
+  
 }
 
-
 function clearMap(map) {
-map.eachLayer(function(layer) {
-  if (layer instanceof L.GeoJSON) {
-    map.removeLayer(layer);
-  }
-});
+  map.eachLayer(function(layer) {
+    if (layer instanceof L.GeoJSON) {
+      map.removeLayer(layer);
+    }
+  });
 }
 
 function getColorCensus (column) {
@@ -146,20 +85,6 @@ function getColorCensus (column) {
   return color;
 }
 
-// function styleMapCensus(feature, columns) {
-//   let color = 'black';
-//   // let maxNumber = Math.max(...columns);
-//   // console.log(maxNumber);
-//   if (feature.properties.hasOwnProperty(columns)) {
-//     color = getColorCensus(feature.properties[columns]);
-//   }
-//   return {
-//     color: 'black',
-//     weight: 2,
-//     fillColor: color,
-//     fillOpacity: 0.8
-//   };
-// }
 
 function styleMapCensus(feature){
   return {
@@ -226,20 +151,6 @@ function styleMapNeighborhood(feature){
   }
 }
 
-// function styleMapNeighborhood(feature, columns) {
-//   let color = 'black';
-//   // let maxNumber = Math.max(...columns);
-//   // console.log(maxNumber);
-//   if (feature.properties.hasOwnProperty(columns)) {
-//     color = getColorNeighborhood(feature.properties[columns]);
-//   }
-//   return {
-//     color: 'black',
-//     weight: 2,
-//     fillColor: color,
-//     fillOpacity: 0.8
-//   };
-// }
 
 function showNeighborhoodsOnMap(map, column) {
 fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/neighborhood_with_counts.geojson')
@@ -263,6 +174,7 @@ fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/neighborh
         layer.bindPopup(popupContent);
       }
     }).addTo(map);
+    return neighborhoods;
     
   });
 }
@@ -277,15 +189,17 @@ function toggleMapFeatures(map) {
     map.removeLayer(layer);
   });
 
-  if (zoomLevel < 15) {
+  if (zoomLevel < 14) {
     // show neighborhoods
     showNeighborhoodsOnMap(map);
-  } else if (zoomLevel >= 15 && zoomLevel <= 18) {
+  } else if (zoomLevel >= 14 && zoomLevel <= 16) {
     showCensusBlocksOnMap(map);
-  } else if (zoomLevel > 18) {
+  } else if (zoomLevel > 16) {
     showPropertiesOnMap(map)
   }
 }
+
+
 
 export{
   mapInitialize,

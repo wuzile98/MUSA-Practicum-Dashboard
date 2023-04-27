@@ -7,3 +7,6 @@ I have just uploaded all the files I want to fetch from on the gcs.
 And now I am waiting my cloud run to give me the map tile so I can load all the parcels on map
 
 Wish me good luck to finish all this thing by tomorrow noon.
+
+list of address. sth like a csv.
+

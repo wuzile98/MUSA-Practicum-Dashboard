@@ -1,5 +1,6 @@
 import { mapInitialize, showPropertiesOnMap, showNeighborhoodsOnMap, clearMap, toggleMapFeatures, showCensusBlocksOnMap} from "./map.js";
-import { handleSearchButtonClick } from "./search.js";
+import { searchForAddress } from "./search.js";
+import {} from "./mapinteraction.js"
 
 //Initialize the evictionMap
 const evictionMap  = mapInitialize();
@@ -10,23 +11,13 @@ evictionMap.on('zoomend', function() {
   toggleMapFeatures(evictionMap);
 });
 
-const info  = L.control();
+const searchBar = document.getElementById('search-input');
+const searchButton = document.getElementById('search-button');
 
-info.onAdd = function (map) {
-  this._div = L.DomUtil.create('div', 'info');
-  this.update();
-  return this._div;
-};
-
-info.update = function (props) {
-  const contents = props ? `<b>${props.name}</b><br />${props.density} people / mi<sup>2</sup>` : 'Hover over a state';
-  this._div.innerHTML = `<h4>US Population Density</h4>${contents}`;
-};
-
-info.addTo(evictionMap);
-
-// showPointsOnMap(evictionMap);
-// showCensusBlocksOnMap(evictionMap);
+searchButton.addEventListener("click", () => {
+  const address = searchBar.value.trim();
+  const newView = searchForAddress(evictionMap, address);
+});
 
 const checkbox1 = document.querySelectorAll('#checkbox1');
 const checkbox2 = document.querySelectorAll('#checkbox2');
@@ -47,5 +38,8 @@ const checkbox2 = document.querySelectorAll('#checkbox2');
       showCensusBlocksOnMap(evictionMap, column);
   })});
 
+
+
+
 window.evictionMap = evictionMap;
-window.info = info;
+// window.info = info;
