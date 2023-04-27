@@ -7,22 +7,18 @@
     </head>
 
     <body>
-        <div>
+        <div class = "title">
             <h1>Eviction Watch</h1>
         </div>
+
         <div class="content-container">
 
-            <!-- Search bar -->
-            <div class = "search-container">
-              <h4>Search Property Address:</h4>
-              <input type="text" id="search-input" name="search-input">
-              <button id="search-button">Search</button>
-            </div>
-            
-            <!-- Words Conatiner -->
-            <!-- <div class="infomation-container">
-              <h4>Informations</h4>
-            </div> -->
+          <div class="topright">
+            <img src=".\data\cls.png" alt="Image description">
+          </div>
+
+          <div class= "filter-container">
+
             <div class="instruction-container">
               <h4>User Guide</h4>
               <p>
@@ -43,7 +39,15 @@
                 We hope you find EvictionWatch useful and informative!
               </p>
             </div>
-
+            
+            <!-- Search bar -->
+            <div class = "search-container">
+              <h4>Search Property Address:</h4>
+              <input type="text" id="search-input" name="search-input">
+              <button id="search-button">Search</button>
+            </div>
+            
+        
             <div class="eviction-slider">
               <h4>Eviction Count Slider</h4>
               <input type="range" min="0" max="100" value="50" class="slider">
@@ -109,14 +113,23 @@
                     <tr>
                       <td><input type="checkbox" id="checkbox3" name="checkbox3" value="eviction_count_total"><label for="checkbox3">color_parcels</label></td>
                     </tr>
-                  </table>
-                </div>
-
-            <!-- Map container -->
-            <div class="map-container">
-                <div id="eviction-map"></div>
+                </table>
             </div>
+
+            <!-- Words Conatiner -->
+            <div class="infomation-container">
+              <h4>Informations</h4>
+            </div>
+
+          </div>
+
+          <!-- Map container -->
+          <div class="map-container">
+            <div id="eviction-map"></div>
+          </div>
+
         </div>
+
     </body>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" crossorigin=""></script>

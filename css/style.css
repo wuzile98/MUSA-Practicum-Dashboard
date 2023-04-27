@@ -10,9 +10,17 @@ body {
   height: 100vh;
 }
 
+.title {
+  height: 10%;
+  background-color: #454968;
+}
+
 h1 {
   padding: 0.2rem;
   padding-left: 1rem;
+  height: 10%;
+  color: white;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h4 {
@@ -32,18 +40,31 @@ p {
 }
 
 .content-container {
+  float: left;
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   overflow: hidden;
   height: 100%;
 }
 
+.filter-container{
+  width: 20%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .map-container {
-  width: 100%;
+  width: 80%;
 }
 
 .search-container {
-  position: absolute;
+  height: auto;
+  width: 100%;
+  margin: 5px;
+  border: 2px solid black;
+  border-radius: 5px;
+  /* position: absolute;
   bottom: 515px;
   left: 10px;
   background-color: white;
@@ -53,30 +74,43 @@ p {
   padding: 5px;
   width: 200px;
   height: 85px;
-  z-index: 999;
+  z-index: 999; */
 }
 
 #search-input {
-  padding: 8px;
-  width: 120px;
+  margin: 5px;
+  height: 20px;
+  border: 1.5px solid black;
+  border-radius: 4px;
+  width: 60%;
+  margin-right: 0;
+  /* padding: 8px;
+  width: 118px;
   border-radius: 4px 0 0 4px;
   height: 10px;
   border: 1px solid #ccc;
-  flex-grow: 1;
+  flex-grow: 1; */
 }
 
 #search-button {
-  padding: 8px;
+  margin: 5px;
+  /* padding: 8px;
   background-color: #2e2345;
-  width: 54px;
+  width: 58px;
   color: white;
   border-radius: 0 4px 4px 0;
   border: 1px solid #ccc;
-  cursor: pointer;
+  cursor: pointer; */
 }
 
 .checkbox-container{
+  padding-bottom: 5px;
+  height: auto;
+  width: 100%;
+  margin: 5px;
   border: 2px solid black;
+  border-radius: 5px;
+  /* border: 2px solid black;
   z-index: 999;
   position: absolute;
   bottom: 50px;
@@ -85,12 +119,18 @@ p {
   background-color: white;
   font-size: 16px;
   width: 200px;
-  padding: 5px;
+  padding: 5px; */
 
 }
 
 .infomation-container{
+  height: 400px;
+  width: 100%;
+  margin: 5px;
   border: 2px solid black;
+  border-radius: 5px;
+}
+  /* border: 2px solid black;
   z-index: 999;
   position: absolute;
   top: 175px;
@@ -100,8 +140,7 @@ p {
   font-size: 16px;
   width: 200px;
   padding: 5px;
-  height: 90px;
-}
+  height: 90px; */
 
 #property-select {
   border: 2px solid black;
@@ -109,12 +148,19 @@ p {
   border-radius: 5px;
   background-color: white;
   font-size: 16px;
-  width: 200px;
+  width: 90%;
   padding: 5px;
+  margin: 5px;
 }
 
 .instruction-container{
+  height: 20%;
+  width: 100%;
+  margin: 5px;
   border: 2px solid black;
+  border-radius: 5px;
+  overflow: auto;
+  /* border: 2px solid black;
   z-index: 999;
   position: absolute;
   top: 300px;
@@ -125,11 +171,17 @@ p {
   font-size: 16px;
   width: 200px;
   padding: 5px;
-  overflow: auto;
+  overflow: auto; */
 }
 
 .zoom-filter{
+  height: auto;
+  width: 100%;
+  margin: 5px;
   border: 2px solid black;
+  border-radius: 5px;
+  overflow: auto;
+  /* border: 2px solid black;
   z-index: 998;
   position: absolute;
   left: 10px;
@@ -138,12 +190,18 @@ p {
   background-color: white;
   font-size: 16px;
   width: 200px;
-  padding: 5px;
+  padding: 5px; */
 }
 
 
 .month-filter{
+  height: auto;
+  width: 100%;
+  margin: 5px;
   border: 2px solid black;
+  border-radius: 5px;
+  overflow: auto;
+  /* border: 2px solid black;
   z-index: 998;
   position: absolute;
   left: 10px;
@@ -152,11 +210,17 @@ p {
   background-color: white;
   font-size: 16px;
   width: 200px;
-  padding: 5px;
+  padding: 5px; */
 }
 
 .year-filter{
+  height: auto;
+  width: 100%;
+  margin: 5px;
   border: 2px solid black;
+  border-radius: 5px;
+  overflow: auto;
+  /* border: 2px solid black;
   z-index: 998;
   position: absolute;
   left: 10px;
@@ -165,11 +229,17 @@ p {
   background-color: white;
   font-size: 16px;
   width: 200px;
-  padding: 5px;
+  padding: 5px; */
 }
 
 .eviction-slider{
+  height: auto;
+  width: 100%;
+  margin: 5px;
   border: 2px solid black;
+  border-radius: 5px;
+  overflow: auto;
+  /* border: 2px solid black;
   z-index: 998;
   position: absolute;
   left: 10px;
@@ -178,7 +248,16 @@ p {
   background-color: white;
   font-size: 16px;
   width: 200px;
-  padding: 5px;
+  padding: 5px; */
+}
+
+.topright img{
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 2px;
+  z-index: 999;
+  height: 9%;
 }
 
 .slider::-webkit-slider-thumb {
