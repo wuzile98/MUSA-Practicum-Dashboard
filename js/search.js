@@ -20,9 +20,11 @@ function searchForAddress(map, address) {
 
         //style the maptile based on the parcel_number
         if (map.propertiesLayer.parcel_number == parcel_number) {
-
-
         }
+
+        setTimeout(() => {
+          map.propertiesLayer.highlightFeature(parcel_number);
+        }, 250);
       } else {
         console.log(`No post found with address "${address}"`);
       }

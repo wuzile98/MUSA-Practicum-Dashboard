@@ -54,6 +54,32 @@ function showPropertiesOnMap(map) {
     }
   ).addTo(map);
 
+  tileLayer.highlightFeature = (featureid) => {
+    if (tileLayer.selectedFeatureId) {
+      tileLayer.resetFeatureStyle(tileLayer.selectedFeatureId);
+    }
+
+    tileLayer.selectedFeatureId = featureid;
+    tileLayer.setFeatureStyle(featureid, 
+      {
+      weight: 4,
+      color: 'black',
+      fillColor: 'red',
+      fillOpacity: 0.7,
+      fill: true
+    });
+  }
+  tileLayer.on("click", (event) => {
+    console.log(event);
+    var popup = L.popup()
+    .setLatLng(event.latlng)
+    .setContent('<p>Hello world!<br />This is a nice popup.</p>'+event.layer.properties.eviction_count_total)
+    .openOn(map);
+
+    tileLayer.highlightFeature(event.layer.properties.parcel_number);
+
+  })
+
   // Store the layer in the map object
   map.propertiesLayer = tileLayer;
   
