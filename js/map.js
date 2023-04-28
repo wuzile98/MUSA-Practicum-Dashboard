@@ -1,3 +1,5 @@
+import { highlightFeature, resetHighlight } from "./mapinteraction.js"
+
 function mapInitialize(){
   //initialize the map variable as evictionMap and retrun the variable
   
@@ -73,7 +75,7 @@ function showPropertiesOnMap(map) {
     console.log(event);
     var popup = L.popup()
     .setLatLng(event.latlng)
-    .setContent('<p>Hello world!<br />This is a nice popup.</p>'+event.layer.properties.eviction_count_total)
+    .setContent("Eviction_count_total: <br />"+event.layer.properties.eviction_count_total+"<br />"+"Address: <br />"+event.layer.properties.ADDRESS)
     .openOn(map);
 
     tileLayer.highlightFeature(event.layer.properties.parcel_number);
@@ -92,6 +94,7 @@ function clearMap(map) {
     }
   });
 }
+
 
 function getColorCensus (column) {
   let color = "";
@@ -143,6 +146,29 @@ function showCensusBlocksOnMap (map, column) {
 
         // Bind the popup to the layer and bind it to the click event
         layer.bindPopup(popupContent);
+      },
+      onEachFeature: function(feature, layer) {
+        layer.on({
+          mouseover: function(e) {
+            const layer = e.target;
+
+            layer.setStyle({
+              weight: 5,
+              color: 'red',
+              dashArray: '',
+              fillColor: 'red',
+              fillOpacity: 0.7
+            });
+
+            layer.bringToFront();
+
+            info.update(layer.feature.properties);
+          },
+          
+          mouseout: function(e) {
+            census_tract.resetStyle(e.target);
+          }
+        })
       }
     }).addTo(map);
   });
@@ -198,8 +224,38 @@ fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/neighborh
 
         // Bind the popup to the layer and bind it to the click event
         layer.bindPopup(popupContent);
+
+        layer.on({
+          mouseover: highlightFeature,
+          mouseout: resetHighlight,
+        })
+      },
+
+      onEachFeature: function(feature, layer) {
+        layer.on({
+          mouseover: function(e) {
+            const layer = e.target;
+
+            layer.setStyle({
+              weight: 5,
+              color: 'red',
+              dashArray: '',
+              fillColor: 'red',
+              fillOpacity: 0.7
+            });
+
+            layer.bringToFront();
+
+            info.update(layer.feature.properties);
+          },
+          
+          mouseout: function(e) {
+            neighborhoods.resetStyle(e.target);
+          }
+        })
       }
     }).addTo(map);
+
     return neighborhoods;
     
   });
@@ -234,4 +290,5 @@ export{
   clearMap,
   toggleMapFeatures,
   showCensusBlocksOnMap,
+  getColorNeighborhood,
 };

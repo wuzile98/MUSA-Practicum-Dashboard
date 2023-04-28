@@ -1,7 +1,7 @@
 /**
  * get the address_search.csv data from "https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/address_search.json"
  */
-function searchForAddress(map, address) {
+function searchForAddress(map, address, callback) {
   // Load the JSON file containing the posts
   fetch("https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/address_search.json")
     .then(response => response.json())
@@ -19,15 +19,13 @@ function searchForAddress(map, address) {
         map.setView(geog, 18);
 
         //style the maptile based on the parcel_number
-        if (map.propertiesLayer.parcel_number == parcel_number) {
-        }
-
         setTimeout(() => {
           map.propertiesLayer.highlightFeature(parcel_number);
         }, 250);
       } else {
-        console.log(`No post found with address "${address}"`);
+        alert(`No post found with address "${address}"`);
       }
+      callback();
     })
     .catch(error => {
       console.error("Error loading posts:", error);
