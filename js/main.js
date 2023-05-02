@@ -47,12 +47,12 @@ const legend = L.control({position: 'bottomright'});
 
 		const div = L.DomUtil.create('div', 'info legend');
 		const labels = [
-      `<i style="background: ${"#2e2345"}"></i>${"Very Low"}`,
-      `<i style="background: ${"#524d60"}"></i>${"Low"}`,
-      `<i style="background: ${"#a57569"}"></i>${"Moderate"}`,
-      `<i style="background: ${"#d19b75"}"></i>${"High"}`,
-      `<i style="background: ${"#e4dbc4"}"></i>${"Very High"}`,
-      `<i style="background: ${"#f5f2ec"}"></i>${"Extremely High"}`
+      `<i style="background: ${"#2e2345"}"></i>${"Extremely HighVery"}`,
+      `<i style="background: ${"#524d60"}"></i>${"Very High"}`,
+      `<i style="background: ${"#a57569"}"></i>${"High"}`,
+      `<i style="background: ${"#d19b75"}"></i>${"Moderate"}`,
+      `<i style="background: ${"#e4dbc4"}"></i>${"Low"}`,
+      `<i style="background: ${"#f5f2ec"}"></i>${"Very Low"}`
       ];
 		// let from, to;
 
