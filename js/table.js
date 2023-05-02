@@ -19,7 +19,7 @@ function showTable(map, url, column, elementId) {
         const list = document.getElementById(elementId);
           top10.forEach(row => {
             const item = document.createElement("li");
-            item.textContent = `Address: ${row["address"]}, Eviction predictions: ${row["predictions"]}`;
+            item.innerHTML = `Address: ${row["address"]}<br>Eviction predictions: ${row["predictions"]}`;
             item.addEventListener("click", () => {
               const geog = [row["lat"], row["lng"]];
               const parcel_number = row["parcel_number"];

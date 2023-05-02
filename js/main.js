@@ -4,14 +4,15 @@ import {} from "./mapinteraction.js"
 import { showTable } from "./table.js";
 
 // Show the popup when the page is fully loaded
-window.addEventListener("load", () => {
-  const popup = document.getElementById("popup");
-  popup.style.display = "block";
-});
+// window.addEventListener("load", () => {
+//   const popup = document.getElementById("popup");
+//   popup.style.display = "block";
+// });
 
+ 
 //Initialize the evictionMap
 const evictionMap  = mapInitialize();
-showNeighborhoodsOnMap(evictionMap);
+showNeighborhoodsOnMap(evictionMap, "eviction_count_total");
 
 //create the control layer
 const info = L.control();
@@ -31,21 +32,36 @@ info.addTo(evictionMap);
 
 evictionMap.attributionControl.addAttribution('© wuzile98@outlook.com</a>');
 
+// map zoom function:
+const buttonClick = false;
+if (!buttonClick){
+  evictionMap.on('zoomend', function() {
+    toggleMapFeatures(evictionMap, "eviction_count_total");
+  });
+}
+
+
 const legend = L.control({position: 'bottomright'});
 
 	legend.onAdd = function (map) {
 
 		const div = L.DomUtil.create('div', 'info legend');
-		const grades = [0, 10, 20, 50, 100, 200, 500, 1000];
-		const labels = [];
-		let from, to;
+		const labels = [
+      `<i style="background: ${"#2e2345"}"></i>${"Terrible"}`,
+      `<i style="background: ${"#524d60"}"></i>${"Poor"}`,
+      `<i style="background: ${"#a57569"}"></i>${"Fair"}`,
+      `<i style="background: ${"#d19b75"}"></i>${"Good"}`,
+      `<i style="background: ${"#e4dbc4"}"></i>${"Excellent"}`,
+      `<i style="background: ${"#f5f2ec"}"></i>${"Outstanding"}`
+      ];
+		// let from, to;
 
-		for (let i = 0; i < grades.length; i++) {
-			from = grades[i];
-			to = grades[i + 1];
+		// for (let i = 0; i < grades.length; i++) {
+		// 	from = grades[i];
+		// 	to = grades[i + 1];
 
-			labels.push(`<i style="background:${getColorNeighborhood(from + 1)}"></i> ${from}${to ? `&ndash;${to}` : '+'}`);
-		}
+		// 	labels.push(`<i style="background:${getColorNeighborhood(from + 1)}"></i> ${from}${to ? `&ndash;${to}` : '+'}`);
+		// }
 
 		div.innerHTML = labels.join('<br>');
 		return div;
@@ -54,10 +70,7 @@ const legend = L.control({position: 'bottomright'});
 legend.addTo(evictionMap);
 // evictionMap.removeControl(legend);
 
-// show all properties on map based on the url
-evictionMap.on('zoomend', function() {
-  toggleMapFeatures(evictionMap);
-});
+
 
 const searchBar = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
@@ -76,6 +89,9 @@ searchButton.addEventListener("click", () => {
 const checkbox1 = document.querySelectorAll('#checkbox1');
 const checkbox2 = document.querySelectorAll('#checkbox2');
 const filter1 = document.querySelector('#property-select');
+const filter2 = document.querySelector('#time-select');
+
+console.log(filter2);
   
   checkbox1.forEach(function(checkbox) {
     checkbox.addEventListener('change', function() {
@@ -101,16 +117,38 @@ const filter1 = document.querySelector('#property-select');
       const center = evictionMap.getCenter();
       evictionMap.setView(center, 12);
       showNeighborhoodsOnMap(evictionMap, "eviction_count_total");
-    } else if (filterValue == "census_tract") {
-      const center = evictionMap.getCenter();
-      evictionMap.setView(center, 12);
-      showCensusBlocksOnMap(evictionMap, "eviction_count_total");
+    // } else if (filterValue == "census_tract") {
+    //   const center = evictionMap.getCenter();
+    //   evictionMap.setView(center, 12);
+    //   showCensusBlocksOnMap(evictionMap, "eviction_count_total");
     } else if (filterValue == "property") {
       const center = evictionMap.getCenter();
       evictionMap.setView(center, 17);
       showPropertiesOnMap(evictionMap);
     }
   })
+
+  filter2.addEventListener('click', function () {
+    const filterValue = this.value;
+
+    clearMap(evictionMap);
+
+    if (filterValue == "eviction_count_total") {
+      showNeighborhoodsOnMap(evictionMap, "eviction_count_total");
+    } else if (filterValue == "predictions") {
+      showNeighborhoodsOnMap(evictionMap, "predictions");
+    } 
+
+    // // show all properties on map based on the url
+    // evictionMap.on('zoomend', function() {
+    //   toggleMapFeatures(evictionMap, filterValue);
+    // });
+
+    }
+
+  )
+
+  
 
 showTable(evictionMap, "https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/address_search_01.json", "predictions", "list");
 

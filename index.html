@@ -8,10 +8,7 @@
 
     <body>
         <!-- Add a hidden popup with a greeting message -->
-        <div id="popup" class="popup" style="display: none;">
-          <h2>Welcome to my website!</h2>
-          <p>Thank you for visiting. Explore the top 10 rows from a JSON file below.</p>
-        </div>
+
 
         <div class = "title">
             <h1>Eviction Watch</h1>
@@ -65,20 +62,14 @@
               <h4>Zoom Level Filter</h4>
               <select id="property-select">
                 <option value="neighborhood">neighborhood</option>
-                <option value="census_tract">census_tract</option>
+                <!-- <option value="census_tract">census_tract</option> -->
                 <option value="property">property</option>
               </select>
 
-              <h4>Year Filter</h4>
-              <select id="property-select">
-                <option value="2016">2016</option>
-                <option value="2017">2017</option>
-                <option value="2018">2018</option>
-                <option value="2019">2019</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
+              <h4>Time Filter</h4>
+              <select id="time-select">
+                <option value="eviction_count_total">Historical Records</option>
+                <option value="predictions">Predictions</option>
               </select>
               
             </div>
