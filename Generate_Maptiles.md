@@ -21,3 +21,14 @@ gcloud beta run jobs create generate-property-map-tiles-01 `
   --cpu 4 `
   --memory 4Gi `
   --region us-central1
+
+  gcloud builds submit `
+  --region us-central1 `
+  --tag gcr.io/forward-theorem-372206/generate-property-map-tiles-02
+
+gcloud beta run jobs create generate-property-map-tiles-02 `
+  --image gcr.io/forward-theorem-372206/generate-property-map-tiles-02 `
+  --service-account data-lake-pipeline-user@forward-theorem-372206.iam.gserviceaccount.com `
+  --cpu 4 `
+  --memory 4Gi `
+  --region us-central1

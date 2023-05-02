@@ -1,6 +1,13 @@
 import { mapInitialize, showPropertiesOnMap, showNeighborhoodsOnMap, clearMap, toggleMapFeatures, showCensusBlocksOnMap, getColorNeighborhood} from "./map.js";
 import { searchForAddress } from "./search.js";
 import {} from "./mapinteraction.js"
+import { showTable } from "./table.js";
+
+// Show the popup when the page is fully loaded
+window.addEventListener("load", () => {
+  const popup = document.getElementById("popup");
+  popup.style.display = "block";
+});
 
 //Initialize the evictionMap
 const evictionMap  = mapInitialize();
@@ -16,7 +23,7 @@ const info = L.control();
   };
 
   info.update = function (props) {
-    const contents = props ? `<b>${props.name}</b><br />${props.eviction_count_total} evictions from 2016 </sup>` : 'Hover over a state';
+    const contents = props ? `<b>${props.name}</b><br />${props.eviction_count_total} evictions from 2016 </sup><br />${props.pred} evictions predictions` : 'Hover over a state';
     this._div.innerHTML = `<h4>Philadelphia Neighborhoods</h4>${contents}`;
   };
 
@@ -104,6 +111,10 @@ const filter1 = document.querySelector('#property-select');
       showPropertiesOnMap(evictionMap);
     }
   })
+
+showTable(evictionMap, "https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/address_search_01.json", "predictions", "list");
+
+
 
 
 window.evictionMap = evictionMap;

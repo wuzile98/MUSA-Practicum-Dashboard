@@ -21,14 +21,15 @@ function mapInitialize(){
 function showPropertiesOnMap(map) {
   // Load the vector tile layer
   let tileLayer = L.vectorGrid.protobuf(
-    "https://storage.googleapis.com/wzl_data_lake/tiles_01/{z}/{x}/{y}.pbf",
+    "https://storage.googleapis.com/wzl_data_lake/tiles_01/properties/{z}/{x}/{y}.pbf",
     {
       rendererFactory: L.canvas.tile,
       interactive: true,
 
       vectorTileLayerStyles: {
-        parcel_with_counts_trim: function(properties, zoom) {
+        parcel_with_counts_trim_1: function(properties, zoom) {
           var count = properties.eviction_count_total;
+          console.log(count);
           var fillColor = 'red';
           if (count == 0) {fillColor = "#f5f2ec";}
           else if (count >0 && count <= 10) {fillColor = '#e4dbc4';}
@@ -75,7 +76,10 @@ function showPropertiesOnMap(map) {
     console.log(event);
     var popup = L.popup()
     .setLatLng(event.latlng)
-    .setContent("Eviction_count_total: <br />"+event.layer.properties.eviction_count_total+"<br />"+"Address: <br />"+event.layer.properties.ADDRESS)
+    .setContent(
+      "Eviction_count_total: <br />"+event.layer.properties.eviction_count_total+
+      "<br />"+"Address: <br />"+event.layer.properties.ADDRESS+
+      "<br />"+"Predictions: <br />" + event.layer.properties.predictions)
     .openOn(map);
 
     tileLayer.highlightFeature(event.layer.properties.parcel_number);
@@ -205,7 +209,7 @@ function styleMapNeighborhood(feature){
 
 
 function showNeighborhoodsOnMap(map, column) {
-fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/neighborhood_with_counts.geojson')
+fetch('https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/neighborhoods.geojson')
   .then(response => response.json())
   .then(data => {
     let neighborhoods = L.geoJSON(data, {
@@ -271,12 +275,12 @@ function toggleMapFeatures(map) {
     map.removeLayer(layer);
   });
 
-  if (zoomLevel < 14) {
+  if (zoomLevel < 16) {
     // show neighborhoods
     showNeighborhoodsOnMap(map);
-  } else if (zoomLevel >= 14 && zoomLevel <= 16) {
-    showCensusBlocksOnMap(map);
-  } else if (zoomLevel > 16) {
+  } 
+  // else if (zoomLevel >= 14 && zoomLevel <= 16) {showCensusBlocksOnMap(map);} 
+  else if (zoomLevel >= 16) {
     showPropertiesOnMap(map)
   }
 }

@@ -3,7 +3,7 @@
  */
 function searchForAddress(map, address, callback) {
   // Load the JSON file containing the posts
-  fetch("https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/address_search.json")
+  fetch("https://storage.googleapis.com/wzl_data_lake/phl_opa_properties/address_search_01.json")
     .then(response => response.json())
     .then(posts => {
       // Search for the first post containing the given address

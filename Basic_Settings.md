@@ -7,3 +7,5 @@
     #f5f2ec
 
     #454968 for the h1
+
+evictionMap.propertiesLayer.getDataLayerNames()

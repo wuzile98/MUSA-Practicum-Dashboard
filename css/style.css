@@ -147,6 +147,7 @@ p {
   border: 2px solid black;
   border-radius: 5px;
   box-shadow: 0 0 15px rgba(0,0,0,0.7); 
+  overflow: scroll;
 }
   /* border: 2px solid black;
   z-index: 999;
@@ -326,4 +327,34 @@ p {
   float: left; 
   margin-right: 8px; 
   opacity: 0.7; 
+}
+
+
+
+#list {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  border: 1px solid black;
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+li:hover {
+  background-color: lightgray;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid black;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  font-size: 1.2em;
 }

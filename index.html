@@ -7,6 +7,12 @@
     </head>
 
     <body>
+        <!-- Add a hidden popup with a greeting message -->
+        <div id="popup" class="popup" style="display: none;">
+          <h2>Welcome to my website!</h2>
+          <p>Thank you for visiting. Explore the top 10 rows from a JSON file below.</p>
+        </div>
+
         <div class = "title">
             <h1>Eviction Watch</h1>
         </div>
@@ -49,10 +55,10 @@
             </div>
             
         
-            <div class="eviction-slider">
+            <!-- <div class="eviction-slider">
               <h4>Eviction Count Slider</h4>
               <input type="range" min="0" max="100" value="50" class="slider">
-            </div>
+            </div> -->
 
             <!-- drop-down check box -->
             <div class="zoom-filter">
@@ -77,7 +83,7 @@
               
             </div>
 
-            <div class="checkbox-container">
+            <!-- <div class="checkbox-container">
                 <table>
                     <h4>Test Block</h4>
                     <tr>
@@ -90,11 +96,12 @@
                       <td><input type="checkbox" id="checkbox3" name="checkbox3" value="eviction_count_total"><label for="checkbox3">color_parcels</label></td>
                     </tr>
                 </table>
-            </div>
+            </div> -->
 
             <!-- Words Conatiner -->
             <div class="infomation-container">
-              <h4>Informations</h4>
+              <h4>Top 10 Predictions</h4>
+              <ul id="list"></ul>
             </div>
 
           </div>
