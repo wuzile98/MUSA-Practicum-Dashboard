@@ -47,7 +47,7 @@ const legend = L.control({position: 'bottomright'});
 
 		const div = L.DomUtil.create('div', 'info legend');
 		const labels = [
-      `<i style="background: ${"#2e2345"}"></i>${"Extremely HighVery"}`,
+      `<i style="background: ${"#2e2345"}"></i>${"Extremely High"}`,
       `<i style="background: ${"#524d60"}"></i>${"Very High"}`,
       `<i style="background: ${"#a57569"}"></i>${"High"}`,
       `<i style="background: ${"#d19b75"}"></i>${"Moderate"}`,
