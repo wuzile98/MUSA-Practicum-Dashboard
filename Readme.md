@@ -1,12 +1,8 @@
 This is the Final Dashboard for the MUSA-Practicum 
 Author: Zile Wu
 
-This is our musa practicum web dashborad and I am still working on it.
-Today is 2023/04/24.
-I have just uploaded all the files I want to fetch from on the gcs.
-And now I am waiting my cloud run to give me the map tile so I can load all the parcels on map
+![Alt Text](images\overview.png)
 
-Wish me good luck to finish all this thing by tomorrow noon.
+This project has been developed in collaboration with the University of Pennsylvania’s Master of Urban Spatial Analytics Spring 2023 Practicum (MUSA 801), instructed by Michael Fichman and Matt Harris. We extend our sincere gratitude to Lauren Parker of Community Legal Services, Jonathan Pyle from Philadelphia Legal Assistance, and Steven Suffian of Who Owns Philadelphia. Their invaluable contributions have been instrumental in bringing this project to fruition.
 
-list of address. sth like a csv.
 
