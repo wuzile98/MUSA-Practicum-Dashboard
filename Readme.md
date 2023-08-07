@@ -1,6 +1,6 @@
 # EVICTION WATCH 
 ## A MUSA Practicum Project
-Author: Zile Wu
+Author: Zile Wu & Chris Michael
 
 ![Alt Text](images/overview.png)
 
