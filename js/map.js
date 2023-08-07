@@ -7,7 +7,7 @@ function mapInitialize(){
 
       const mapboxAccount = 'mapbox';
       const mapboxStyle = 'light-v10';
-      const mapboxToken = 'pk.eyJ1IjoieWVzZW5pYW8iLCJhIjoiY2tlZjAyM3p5MDNnMjJycW85bmpjenFkOCJ9.TDYe7XRNP8CnAto0kLA5zA';
+      const mapboxToken = 'pk.eyJ1IjoibmFuYWZhaXIiLCJhIjoiY2tyMnhiaWtrMWNhMjJ4bGQwMXNjbnk1eiJ9.Yh8LEXOsedeTLZye9PnjIw';
 
       L.tileLayer(`https://api.mapbox.com/styles/v1/${mapboxAccount}/${mapboxStyle}/tiles/256/{z}/{x}/{y}@2x?access_token=${mapboxToken}`, {
       maxZoom: 19,
